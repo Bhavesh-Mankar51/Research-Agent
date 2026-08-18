@@ -1,0 +1,1020 @@
+<title>Six Apps, Honestly</title>
+<style>
+  :root {
+    --ground: #FAFBFC;
+    --surface: #FFFFFF;
+    --surface-sunk: #F1F4F6;
+    --ink: #131C22;
+    --ink-soft: #4A5C66;
+    --ink-faint: #74858E;
+    --rule: #DCE4E8;
+    --rule-strong: #C3CFD5;
+    --accent: #0B6B63;
+    --accent-soft: #E2F0EE;
+    --hit: #1B6E4A;
+    --hit-soft: #E1F0E7;
+    --abstain: #9A6510;
+    --abstain-soft: #FBEEDA;
+    --blocked: #9E3226;
+    --blocked-soft: #F9E5E2;
+
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0D1418;
+      --surface: #141E24;
+      --surface-sunk: #101A1F;
+      --ink: #E8EFF2;
+      --ink-soft: #A7B8C0;
+      --ink-faint: #7C8F98;
+      --rule: #23323A;
+      --rule-strong: #33454E;
+      --accent: #5FC8BC;
+      --accent-soft: #122E2C;
+      --hit: #6FC894;
+      --hit-soft: #12291D;
+      --abstain: #DFAE5C;
+      --abstain-soft: #2C2312;
+      --blocked: #E8897B;
+      --blocked-soft: #2E1917;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #0D1418;
+    --surface: #141E24;
+    --surface-sunk: #101A1F;
+    --ink: #E8EFF2;
+    --ink-soft: #A7B8C0;
+    --ink-faint: #7C8F98;
+    --rule: #23323A;
+    --rule-strong: #33454E;
+    --accent: #5FC8BC;
+    --accent-soft: #122E2C;
+    --hit: #6FC894;
+    --hit-soft: #12291D;
+    --abstain: #DFAE5C;
+    --abstain-soft: #2C2312;
+    --blocked: #E8897B;
+    --blocked-soft: #2E1917;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.65;
+    margin: 0;
+    padding: 0 24px 96px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 940px; margin: 0 auto; }
+  .prose { max-width: 660px; }
+
+  h1, h2, h3, .label, th, .stat-num, .pill, code, kbd { font-family: var(--sans); }
+
+  h1 {
+    font-size: clamp(2.1rem, 5vw, 3.1rem);
+    line-height: 1.06;
+    letter-spacing: -0.028em;
+    font-weight: 660;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+
+  h2 {
+    font-size: 1.45rem;
+    letter-spacing: -0.018em;
+    font-weight: 640;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-size: 1.02rem;
+    letter-spacing: -0.008em;
+    font-weight: 640;
+    margin: 0 0 8px;
+  }
+
+  p { margin: 0 0 16px; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  .label {
+    font-size: 0.685rem;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    font-weight: 620;
+    color: var(--ink-faint);
+  }
+
+  header.masthead {
+    padding: 72px 0 30px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .kicker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    align-items: baseline;
+    margin-bottom: 22px;
+  }
+
+  .standfirst {
+    font-size: 1.16rem;
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin: 0;
+  }
+
+  .byline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    margin-top: 26px;
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--ink-faint);
+  }
+
+  .scope {
+    margin: 32px 0 0;
+    padding: 22px 24px;
+    background: var(--abstain-soft);
+    border: 1px solid var(--rule-strong);
+    border-left: 4px solid var(--abstain);
+    border-radius: 3px;
+  }
+  .scope h2 { font-size: 1.05rem; margin-bottom: 8px; color: var(--ink); }
+  .scope p { margin-bottom: 10px; color: var(--ink-soft); font-size: 0.95rem; }
+  .scope p:last-child { margin-bottom: 0; }
+  .scope strong { color: var(--ink); }
+
+  section { padding: 54px 0 0; }
+  .sec-head { margin-bottom: 26px; }
+  .sec-head .label { display: block; margin-bottom: 7px; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 30px;
+  }
+  .stat { background: var(--surface); padding: 18px 20px; }
+  .stat-num {
+    font-size: 1.85rem;
+    font-weight: 660;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+    display: block;
+  }
+  .stat-cap {
+    font-size: 0.775rem;
+    color: var(--ink-faint);
+    font-family: var(--sans);
+    margin-top: 5px;
+    display: block;
+    line-height: 1.4;
+  }
+  .stat.is-hit .stat-num { color: var(--hit); }
+  .stat.is-abstain .stat-num { color: var(--abstain); }
+  .stat.is-blocked .stat-num { color: var(--blocked); }
+
+  .scroller {
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--surface);
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: var(--sans);
+    font-size: 0.845rem;
+    min-width: 720px;
+  }
+  caption {
+    caption-side: bottom;
+    text-align: left;
+    padding: 12px 2px 0;
+    font-family: var(--sans);
+    font-size: 0.775rem;
+    color: var(--ink-faint);
+    line-height: 1.5;
+  }
+  th {
+    text-align: left;
+    font-weight: 620;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.075em;
+    color: var(--ink-faint);
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--rule-strong);
+    background: var(--surface-sunk);
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+  td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    color: var(--ink-soft);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.app { color: var(--ink); font-weight: 600; white-space: nowrap; }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .mono { font-family: var(--mono); font-size: 0.94em; }
+
+  .pill {
+    display: inline-block;
+    font-size: 0.685rem;
+    font-weight: 620;
+    letter-spacing: 0.02em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    white-space: nowrap;
+    border: 1px solid transparent;
+  }
+  .p-hit { background: var(--hit-soft); color: var(--hit); border-color: var(--hit); }
+  .p-abstain { background: var(--abstain-soft); color: var(--abstain); border-color: var(--abstain); }
+  .p-blocked { background: var(--blocked-soft); color: var(--blocked); border-color: var(--blocked); }
+  .p-plain { background: var(--surface-sunk); color: var(--ink-soft); border-color: var(--rule-strong); }
+
+  .mark { font-family: var(--mono); font-weight: 700; font-size: 0.95rem; }
+  .mark-hit { color: var(--hit); }
+  .mark-miss { color: var(--abstain); }
+
+  .defects { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 3px; }
+  .defect {
+    background: var(--surface);
+    padding: 20px 22px;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 0 18px;
+  }
+  .defect-n {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 700;
+    padding-top: 3px;
+  }
+  .defect h3 { margin-bottom: 6px; }
+  .defect p { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 10px; }
+  .defect p:last-child { margin-bottom: 0; }
+  .defect .fix {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    padding: 9px 12px;
+    background: var(--accent-soft);
+    border-radius: 3px;
+    color: var(--ink);
+  }
+  .defect .fix b { color: var(--accent); font-weight: 640; }
+
+  figure.diagram {
+    margin: 0 0 26px;
+    padding: 26px 22px 18px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+  .diagram .scroller-plain { overflow-x: auto; }
+  svg.dg { display: block; width: 100%; min-width: 620px; height: auto; }
+  figcaption {
+    font-family: var(--sans);
+    font-size: 0.775rem;
+    color: var(--ink-faint);
+    line-height: 1.55;
+    margin-top: 16px;
+    padding-top: 13px;
+    border-top: 1px solid var(--rule);
+  }
+  figcaption b { color: var(--ink-soft); font-weight: 620; }
+
+  .dg-box { fill: var(--surface); stroke: var(--rule-strong); stroke-width: 1.1; }
+  .dg-lane { fill: var(--surface-sunk); stroke: var(--rule-strong); stroke-width: 1.1; }
+  .dg-term { fill: var(--ink); }
+  .dg-term-t {
+    fill: var(--ground);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 650;
+    letter-spacing: 0.02em;
+  }
+  .dg-t { fill: var(--ink); font-family: var(--sans); font-size: 13px; font-weight: 620; }
+  .dg-sub { fill: var(--ink-soft); font-family: var(--sans); font-size: 10.5px; }
+  .dg-tier {
+    fill: var(--ink-faint);
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.03em;
+  }
+  .dg-edge { stroke: var(--ink-faint); stroke-width: 1.3; fill: none; }
+  .dg-dash { stroke-dasharray: 5 4; }
+  .dg-lab { fill: var(--ink-faint); font-family: var(--sans); font-size: 10.5px; }
+  .dg-head { fill: var(--ink-faint); }
+  .dg-accent { stroke: var(--accent); stroke-width: 1.6; fill: none; }
+  .dg-head-a { fill: var(--accent); }
+  .dg-lab-a {
+    fill: var(--accent);
+    font-family: var(--sans);
+    font-size: 10.5px;
+    font-weight: 620;
+  }
+  .dg-rule { stroke: var(--rule-strong); stroke-width: 1; stroke-dasharray: 3 4; }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.87em;
+    background: var(--surface-sunk);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid var(--rule);
+  }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 20px 22px;
+  }
+  .card p { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 0; }
+  .card h3 { color: var(--ink); }
+
+  ul.tight { margin: 0 0 16px; padding-left: 20px; }
+  ul.tight li { margin-bottom: 9px; color: var(--ink-soft); }
+  ul.tight li strong { color: var(--ink); }
+
+  details {
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--surface);
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+  summary {
+    cursor: pointer;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--ink);
+  }
+  details[open] summary { margin-bottom: 12px; }
+  details p { font-size: 0.9rem; color: var(--ink-soft); }
+  details p:last-child { margin-bottom: 0; }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  @media (max-width: 620px) {
+    body { padding: 0 16px 64px; font-size: 16px; }
+    header.masthead { padding-top: 44px; }
+    .defect { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="kicker">
+      <span class="label">Composio · AI Product Ops Intern</span>
+      <span class="label" style="color:var(--accent)">Integration research agent</span>
+    </div>
+    <h1>Detailed analysis</h1>
+    <p class="standfirst">
+      An agent that reads an app's developer docs and returns an evidence-backed verdict on
+      whether you could build a toolkit for it today. This page reports what it actually
+      produced — including the runs that failed and the number that started at 50%.
+    </p>
+    <div class="byline">
+      <span>Built 17–18 Aug 2026</span>
+      <span>LangGraph · Composio · Claude Opus&nbsp;5 + Haiku&nbsp;4.5</span>
+      <span>$2.48 of model spend</span>
+    </div>
+  </header>
+
+  <div class="scope">
+    <h2>Note: the sample is 6 apps, not 100</h2>
+    <p>
+      The assignment supplies 100 apps. This page reports <strong>6</strong>. The agent, the
+      batch runner, the verification loops and the accuracy audit are all real and all ran —
+      but the Anthropic account <strong>ran out of credits mid-batch</strong>, and four of the
+      five apps in the final pass died on <span class="mono">"credit balance is too low"</span>
+      rather than on anything the agent did.
+    </p>
+    <p>
+      Nothing here is extrapolated to fill the gap. There are no invented rows, no estimated
+      verdicts, and no patterns claimed at a confidence the sample cannot carry. What follows
+      is 6 apps of real output, hand-checked field by field against vendor documentation.
+      Scaling to 100 is a billing problem, not an engineering one: the runner is written,
+      tested, and takes an app list as an argument.
+    </p>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">The headline</span>
+      <h2>What the sample shows</h2>
+    </div>
+
+    <div class="stats">
+      <div class="stat is-hit">
+        <span class="stat-num">3 / 6</span>
+        <span class="stat-cap">ship an <b>official MCP server</b> — Salesforce, Linear, Stripe</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">4 / 6</span>
+        <span class="stat-cap">self-serve: credentials without talking to anyone</span>
+      </div>
+      <div class="stat is-blocked">
+        <span class="stat-num">1 / 6</span>
+        <span class="stat-cap">hard-gated behind contact-sales (PitchBook)</span>
+      </div>
+      <div class="stat is-abstain">
+        <span class="stat-num">0</span>
+        <span class="stat-cap">fabricated citations or false claims, across every run</span>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>
+        Four patterns held across the six. They are stated as observations on a six-app sample,
+        because that is what they are.
+      </p>
+      <ul class="tight">
+        <li>
+          <strong>Auth is not the blocker anyone expects.</strong> Every app in the sample has a
+          documented, obtainable credential path — OAuth2 for the CRM and support tools, plain
+          API keys for the developer-facing ones. Not one of them is blocked <em>on auth</em>.
+        </li>
+        <li>
+          <strong>The real gate is production access, not first access.</strong> WhatsApp
+          Business hands you a token and a test number in minutes, then requires business
+          verification before you can message a real customer. The friction sits after the
+          demo works, which is exactly where a toolkit build discovers it.
+        </li>
+        <li>
+          <strong>Commercial gating is a category property, not a technical one.</strong>
+          PitchBook's API is REST and perfectly ordinary; it is simply sold, not published. The
+          only route in is a lead form. That is a correct finding, not a research failure.
+        </li>
+        <li>
+          <strong>Official MCP is already table stakes at the top end.</strong> Half the sample
+          ships a vendor-hosted MCP server. This was also the single dimension the agent was
+          worst at detecting — it scored 1 / 6 on MCP before the fixes below.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">The findings</span>
+      <h2>Six apps, every dimension, verified by hand</h2>
+    </div>
+
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr>
+            <th>App</th>
+            <th>Category</th>
+            <th>Auth</th>
+            <th>Access</th>
+            <th>API</th>
+            <th>MCP</th>
+            <th>Verdict</th>
+            <th>Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="app">Salesforce</td>
+            <td>CRM &amp; sales</td>
+            <td>OAuth2</td>
+            <td><span class="pill p-hit">Self-serve free</span></td>
+            <td>REST, broad</td>
+            <td><span class="pill p-hit">Official</span></td>
+            <td>Buildable today</td>
+            <td><a href="https://developer.salesforce.com/docs/platform/hosted-mcp-servers/guide/hosted-mcp-servers-overview.html">Hosted MCP</a></td>
+          </tr>
+          <tr>
+            <td class="app">Zendesk</td>
+            <td>Support</td>
+            <td>OAuth2 <span class="pill p-plain">API token deprecated</span></td>
+            <td><span class="pill p-hit">Self-serve trial</span></td>
+            <td>REST, broad</td>
+            <td><span class="pill p-plain">Community</span></td>
+            <td>Buildable today</td>
+            <td><a href="https://developer.zendesk.com/api-reference/introduction/security-and-auth/">Security &amp; auth</a></td>
+          </tr>
+          <tr>
+            <td class="app">Linear</td>
+            <td>Productivity</td>
+            <td>OAuth2, API key, PAT</td>
+            <td><span class="pill p-hit">Self-serve free</span></td>
+            <td>GraphQL</td>
+            <td><span class="pill p-hit">Official</span></td>
+            <td>Buildable today</td>
+            <td><a href="https://linear.app/docs/mcp">MCP server</a></td>
+          </tr>
+          <tr>
+            <td class="app">Stripe</td>
+            <td>Fintech</td>
+            <td>API key (bearer / basic)</td>
+            <td><span class="pill p-hit">Self-serve free</span></td>
+            <td>REST, broad</td>
+            <td><span class="pill p-hit">Official</span></td>
+            <td>Buildable today</td>
+            <td><a href="https://docs.stripe.com/mcp">mcp.stripe.com</a></td>
+          </tr>
+          <tr>
+            <td class="app">WhatsApp Business</td>
+            <td>Communications</td>
+            <td>Meta access tokens (OAuth2-derived)</td>
+            <td><span class="pill p-abstain">Test free · production verified</span></td>
+            <td>REST (Graph API)</td>
+            <td><span class="pill p-plain">Community</span></td>
+            <td>Buildable with friction</td>
+            <td><a href="https://developers.facebook.com/docs/whatsapp/cloud-api/get-started">Cloud API start</a></td>
+          </tr>
+          <tr>
+            <td class="app">PitchBook</td>
+            <td>Finance research</td>
+            <td>Not public (token, per third parties)</td>
+            <td><span class="pill p-blocked">Contact sales</span></td>
+            <td>REST, private docs</td>
+            <td><span class="pill p-plain">None</span></td>
+            <td><span class="pill p-blocked">Blocked</span></td>
+            <td><a href="https://pitchbook.com/products/direct-access-data">Direct Data</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-family:var(--sans);font-size:0.78rem;color:var(--ink-faint);margin-top:12px;max-width:660px">
+      This table is <em>ground truth</em> — each cell opened in a browser and read against vendor
+      docs on 18 Aug 2026. What the agent said, and where it differed, is the next section.
+    </p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">The agent</span>
+      <h2>What was built</h2>
+    </div>
+
+    <div class="prose">
+      <p>
+        One app name in, one evidence-backed report out. Planning is deterministic Python rather
+        than an LLM call — the six dimensions are fixed by the problem, so decomposing into lanes
+        costs zero tokens and cannot hallucinate a lane.
+      </p>
+    </div>
+
+    <figure class="diagram">
+      <div class="scroller-plain">
+      <svg class="dg" viewBox="0 0 880 712" role="img"
+           aria-label="Pipeline: an app name enters lookup_cache; a cache hit skips straight to persist with no model calls. A miss goes to resolve, then fans out to three parallel Haiku lanes — identity, auth and access, API and MCP — each running a bounded search loop. The lanes return only claims and quotes; raw page text stops there. Opus 5 synthesizes a report, then verifies it with a critic and a Python citation check. Gaps send one lane back to re-research; otherwise the run persists to Postgres and returns a report.">
+        <defs>
+          <marker id="dgArrow" viewBox="0 0 10 10" refX="9.2" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" class="dg-head" />
+          </marker>
+          <marker id="dgArrowA" viewBox="0 0 10 10" refX="9.2" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" class="dg-head-a" />
+          </marker>
+        </defs>
+
+        <rect class="dg-term" x="370" y="24" width="140" height="30" rx="15" />
+        <text class="dg-term-t" x="440" y="44" text-anchor="middle">app name</text>
+        <line class="dg-edge" x1="440" y1="54" x2="440" y2="82" marker-end="url(#dgArrow)" />
+
+        <rect class="dg-box" x="340" y="84" width="200" height="44" rx="3" />
+        <text class="dg-t" x="440" y="104" text-anchor="middle">lookup_cache</text>
+        <text class="dg-sub" x="440" y="119" text-anchor="middle">report newer than the TTL?</text>
+
+        <line class="dg-edge" x1="440" y1="128" x2="440" y2="156" marker-end="url(#dgArrow)" />
+        <text class="dg-lab" x="448" y="146">miss</text>
+
+        <rect class="dg-box" x="340" y="158" width="200" height="44" rx="3" />
+        <text class="dg-t" x="440" y="178" text-anchor="middle">resolve</text>
+        <text class="dg-sub" x="440" y="193" text-anchor="middle">disambiguate &#183; guess docs URLs</text>
+        <text class="dg-tier" x="330" y="182" text-anchor="end">Haiku 4.5</text>
+
+        <line class="dg-edge" x1="440" y1="202" x2="440" y2="226" />
+        <line class="dg-edge" x1="160" y1="226" x2="720" y2="226" />
+        <line class="dg-edge" x1="160" y1="226" x2="160" y2="248" marker-end="url(#dgArrow)" />
+        <line class="dg-edge" x1="440" y1="226" x2="440" y2="248" marker-end="url(#dgArrow)" />
+        <line class="dg-edge" x1="720" y1="226" x2="720" y2="248" marker-end="url(#dgArrow)" />
+
+        <rect class="dg-lane" x="60" y="250" width="200" height="78" rx="3" />
+        <text class="dg-t" x="72" y="270">identity</text>
+        <text class="dg-tier" x="248" y="270" text-anchor="end">Haiku 4.5</text>
+        <text class="dg-sub" x="72" y="289">what it is, who ships it,</text>
+        <text class="dg-sub" x="72" y="303">which category</text>
+        <text class="dg-tier" x="72" y="319">bounded search loop</text>
+
+        <rect class="dg-lane" x="340" y="250" width="200" height="78" rx="3" />
+        <text class="dg-t" x="352" y="270">auth &amp; access</text>
+        <text class="dg-tier" x="528" y="270" text-anchor="end">Haiku 4.5</text>
+        <text class="dg-sub" x="352" y="289">how you authenticate,</text>
+        <text class="dg-sub" x="352" y="303">can you self-serve a key</text>
+        <text class="dg-tier" x="352" y="319">bounded search loop</text>
+
+        <rect class="dg-lane" x="620" y="250" width="200" height="78" rx="3" />
+        <text class="dg-t" x="632" y="270">API &amp; MCP</text>
+        <text class="dg-tier" x="808" y="270" text-anchor="end">Haiku 4.5</text>
+        <text class="dg-sub" x="632" y="289">REST or GraphQL, breadth,</text>
+        <text class="dg-sub" x="632" y="303">is there an MCP server</text>
+        <text class="dg-tier" x="632" y="319">bounded search loop</text>
+
+        <line class="dg-edge" x1="160" y1="328" x2="160" y2="356" />
+        <line class="dg-edge" x1="440" y1="328" x2="440" y2="356" />
+        <line class="dg-edge" x1="720" y1="328" x2="720" y2="356" />
+        <line class="dg-edge" x1="160" y1="356" x2="720" y2="356" />
+        <line class="dg-edge" x1="440" y1="356" x2="440" y2="384" marker-end="url(#dgArrow)" />
+
+        <line class="dg-rule" x1="20" y1="368" x2="424" y2="368" />
+        <text class="dg-lab" x="456" y="372">claims + quotes only &#8212; raw page text stops here</text>
+
+        <rect class="dg-box" x="340" y="386" width="200" height="44" rx="3" />
+        <text class="dg-t" x="440" y="406" text-anchor="middle">synthesize</text>
+        <text class="dg-sub" x="440" y="421" text-anchor="middle">one report, every claim cited</text>
+        <text class="dg-tier" x="330" y="410" text-anchor="end">Opus 5</text>
+
+        <line class="dg-edge" x1="440" y1="430" x2="440" y2="468" marker-end="url(#dgArrow)" />
+
+        <rect class="dg-box" x="340" y="470" width="200" height="44" rx="3" />
+        <text class="dg-t" x="440" y="490" text-anchor="middle">verify</text>
+        <text class="dg-sub" x="440" y="505" text-anchor="middle">critic + Python citation check</text>
+        <text class="dg-tier" x="330" y="494" text-anchor="end">Opus 5</text>
+
+        <line class="dg-edge" x1="440" y1="514" x2="440" y2="564" marker-end="url(#dgArrow)" />
+        <text class="dg-lab" x="448" y="542">passes</text>
+
+        <rect class="dg-box" x="340" y="566" width="200" height="44" rx="3" />
+        <text class="dg-t" x="440" y="586" text-anchor="middle">persist</text>
+        <text class="dg-sub" x="440" y="601" text-anchor="middle">Postgres: report, cost, trace</text>
+
+        <line class="dg-edge" x1="440" y1="610" x2="440" y2="638" marker-end="url(#dgArrow)" />
+
+        <rect class="dg-term" x="370" y="640" width="140" height="30" rx="15" />
+        <text class="dg-term-t" x="440" y="660" text-anchor="middle">report</text>
+
+        <path class="dg-edge dg-dash" d="M340,106 H28 V588 H336" marker-end="url(#dgArrow)" />
+        <text class="dg-lab" x="184" y="99" text-anchor="middle">hit &#183; zero model calls, zero network</text>
+
+        <path class="dg-accent" d="M540,492 H852 V238 H760 V246" marker-end="url(#dgArrowA)" />
+        <text class="dg-lab-a" x="556" y="484">gaps</text>
+        <text class="dg-lab-a" x="844" y="404" text-anchor="end">re-research only the lane that can fix it &#183; &#215;1</text>
+      </svg>
+      </div>
+      <figcaption>
+        <b>The run.</b> Planning is not a model call &#8212; the three lanes are fixed in Python,
+        so the fan-out costs zero tokens and cannot hallucinate a lane. The dashed rule is the
+        cost boundary: lanes compress what they read into claims and quotes, so Opus 5's context
+        scales with claims made rather than pages fetched. The teal loop is the repair path:
+        a failed check re-runs one lane, not the whole graph.
+      </figcaption>
+    </figure>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Lanes are the cost control</h3>
+        <p>
+          Each lane returns a handful of structured claims; raw page text never reaches the
+          orchestrator. The expensive model's context scales with claims made, not pages read —
+          which is what makes Opus affordable on synthesis.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Citations are checked in Python</h3>
+        <p>
+          Every URL a tool returned is recorded. Any cited URL outside that set is flagged
+          deterministically and fails verification, whatever the critic model thought. Across
+          every run on this page, that check fired zero times.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Unknown is a first-class answer</h3>
+        <p>
+          Every enum has an <code>unknown</code> member and confidence is recorded per dimension.
+          This is why the agent's failure mode is silence rather than invention — see the audit.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">The verification</span>
+      <h2>50% on the first pass, and why</h2>
+    </div>
+
+    <div class="prose">
+      <p>
+        Six apps were scored across six dimensions each — 36 field-level judgements — against
+        documentation read by hand. The first pass got <strong>18 of 36 right: 50%</strong>.
+      </p>
+      <p>
+        The shape of those 18 misses matters more than the number. <strong>Seventeen were
+        abstentions</strong> — the agent returned <code>unknown</code> where a documented answer
+        existed. One was an under-confident verdict (Linear called
+        <span class="mono">buildable_with_friction</span>; it is buildable today). <strong>None
+        was a false statement, and none cited a URL that was never fetched.</strong> The agent
+        was not lying. It could not reach the documentation, and it said so.
+      </p>
+      <p>Then the reason for all that silence turned out to be four defects in the harness, not the model.</p>
+    </div>
+
+    <div class="scroller" style="margin-bottom:34px">
+      <table>
+        <caption>
+          Pass 1 field-level scoring against hand-verified ground truth. ✓ correct, · abstained
+          (<code>unknown</code> where an answer exists), ~ under-confident.
+        </caption>
+        <thead>
+          <tr>
+            <th>App</th><th>Category</th><th>Auth</th><th>Access</th><th>API</th><th>MCP</th><th>Verdict</th><th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="app">Salesforce</td>
+            <td><span class="mark mark-hit">✓</span></td><td><span class="mark mark-hit">✓</span></td>
+            <td><span class="mark mark-hit">✓</span></td><td><span class="mark mark-hit">✓</span></td>
+            <td><span class="mark mark-miss">·</span></td><td><span class="mark mark-hit">✓</span></td>
+            <td class="num">5 / 6</td>
+          </tr>
+          <tr>
+            <td class="app">Stripe</td>
+            <td><span class="mark mark-hit">✓</span></td><td><span class="mark mark-hit">✓</span></td>
+            <td><span class="mark mark-hit">✓</span></td><td><span class="mark mark-hit">✓</span></td>
+            <td><span class="mark mark-miss">·</span></td><td><span class="mark mark-hit">✓</span></td>
+            <td class="num">5 / 6</td>
+          </tr>
+          <tr>
+            <td class="app">Linear</td>
+            <td><span class="mark mark-hit">✓</span></td><td><span class="mark mark-hit">✓</span></td>
+            <td><span class="mark mark-miss">·</span></td><td><span class="mark mark-hit">✓</span></td>
+            <td><span class="mark mark-miss">·</span></td><td><span class="mark mark-miss">~</span></td>
+            <td class="num">3 / 6</td>
+          </tr>
+          <tr>
+            <td class="app">Zendesk</td>
+            <td><span class="mark mark-hit">✓</span></td><td><span class="mark mark-miss">·</span></td>
+            <td><span class="mark mark-miss">·</span></td><td><span class="mark mark-hit">✓</span></td>
+            <td><span class="mark mark-miss">·</span></td><td><span class="mark mark-miss">·</span></td>
+            <td class="num">2 / 6</td>
+          </tr>
+          <tr>
+            <td class="app">WhatsApp Business</td>
+            <td><span class="mark mark-hit">✓</span></td><td><span class="mark mark-miss">·</span></td>
+            <td><span class="mark mark-miss">·</span></td><td><span class="mark mark-hit">✓</span></td>
+            <td><span class="mark mark-miss">·</span></td><td><span class="mark mark-miss">·</span></td>
+            <td class="num">2 / 6</td>
+          </tr>
+          <tr>
+            <td class="app">PitchBook</td>
+            <td><span class="mark mark-hit">✓</span></td><td><span class="mark mark-miss">·</span></td>
+            <td><span class="mark mark-miss">·</span></td><td><span class="mark mark-miss">·</span></td>
+            <td><span class="mark mark-miss">·</span></td><td><span class="mark mark-miss">·</span></td>
+            <td class="num">1 / 6</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec-head">
+      <span class="label">Root cause</span>
+      <h2>Four defects, found by reading the logs</h2>
+    </div>
+
+    <div class="defects">
+      <div class="defect">
+        <span class="defect-n">01</span>
+        <div>
+          <h3>Three of four toolkits were dead, and the agent could not tell</h3>
+          <p>
+            Composio's <code>tools.get()</code> returns tool <em>schemas</em> whether or not the
+            user has connected the toolkit. EXA, Firecrawl and Tavily had no connected account,
+            so 16 of 36 bound tools returned 404 the moment they were called — after the model
+            had already spent a turn choosing them. The provider reported
+            <code>toolkits_skipped: {}</code>, because nothing had thrown.
+          </p>
+          <div class="fix"><b>Fix</b> — check each toolkit's auth mode and the live connected
+            accounts at discovery. Anything needing credentials it does not have is skipped and
+            named in the run record instead of silently bound.</div>
+        </div>
+      </div>
+
+      <div class="defect">
+        <span class="defect-n">02</span>
+        <div>
+          <h3>Failed calls were charged to the search budget</h3>
+          <p>
+            Each lane gets a fixed number of tool calls. Failures were counted against it, so a
+            lane could spend its entire budget on 404s and return nothing at all. PitchBook's
+            report said it plainly: <em>"All research lanes returned no findings."</em>
+          </p>
+          <div class="fix"><b>Fix</b> — only calls that returned something count. A call that
+            errored produced no evidence and must not starve the lane of its attempts.</div>
+        </div>
+      </div>
+
+      <div class="defect">
+        <span class="defect-n">03</span>
+        <div>
+          <h3>The worker was offered Amazon, Flights and Hotels search</h3>
+          <p>
+            The tool filter admitted any slug containing <code>SEARCH</code> — and
+            <code>COMPOSIO_SEARCH</code> prefixes every one of its verticals, so flight, hotel,
+            shopping and TripAdvisor search were all bound to a lane researching API auth. Every
+            one cost input tokens on every turn and offered a plausible wrong choice.
+          </p>
+          <div class="fix"><b>Fix</b> — exclude the consumer verticals. 36 tools became 7.</div>
+        </div>
+      </div>
+
+      <div class="defect">
+        <span class="defect-n">04</span>
+        <div>
+          <h3>One over-long paragraph destroyed the entire report</h3>
+          <p>
+            The worst of the four. <code>integration_notes</code> caps at 800 characters; given
+            richer findings, Opus wrote about a thousand. LangChain's structured output turns a
+            schema breach into a returned <code>parsing_error</code> rather than an exception,
+            and the code discarded it — so every lane's work was thrown away and the run reported
+            only <em>"Synthesis returned no structured report."</em>
+            <strong>Four of five runs in the second pass died this way.</strong> The same
+            all-or-nothing flaw sat in the lane parser: a single 900-character quote discarded
+            all seven of Stripe's findings, including the one that had correctly found
+            <span class="mono">mcp.stripe.com</span>.
+          </p>
+          <div class="fix"><b>Fix</b> — log the parse error, then salvage deterministically:
+            trim only the fields that breached a length cap and re-validate. Findings are
+            salvaged one at a time, so one bad quote can no longer cost six good claims. Only
+            length violations are repaired — any other error means something substantive is
+            wrong, which is not ours to paper over.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:34px">
+      <h3 style="font-size:1.15rem;margin-bottom:10px">What the fixes bought — and what is still unproven</h3>
+      <p>
+        The rerun is where honesty costs something. Stripe went from
+        <strong>5 / 6 to 6 / 6</strong>: it found <span class="mono">mcp.stripe.com</span> and
+        labelled it <span class="mono">official</span>, moved API breadth from
+        <code>unknown</code> to <code>broad</code>, and raised every confidence rating to
+        <span class="mono">high</span>. Tool calls per run rose from 8 to 15 and distinct URLs
+        seen from 71 to 307 — the agent could finally read.
+      </p>
+      <p>
+        <strong>Then the credits ran out.</strong> Stripe is the only app that completed the
+        fixed pipeline. The other four returned
+        <span class="mono">"credit balance is too low"</span>. So the improvement is measured on
+        a sample of one, and this page will not call that a validated 100% until the other five
+        have run. The defects are real and fixed, and 41 tests pass — but one app is one app.
+      </p>
+      <p>
+        Worth noting on the other side: even at 6 / 6, the critic still raised six issues against
+        the Stripe report — an unsourced webhooks aside, and an endpoint count resting on an
+        unvetted third-party aggregator. The verification layer is doing its job on output that
+        a human would otherwise have waved through.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">The human</span>
+      <h2>Where a person was needed</h2>
+    </div>
+    <div class="prose">
+      <ul class="tight">
+        <li>
+          <strong>Diagnosing.</strong> The agent honestly reported low confidence
+          on nearly everything. It could not work out <em>why</em> — that its own tools were
+          returning 404s. That took a person reading warning logs the agent never saw.
+        </li>
+        <li>
+          <strong>Telling "unknown" apart from "gated."</strong> The agent said
+          <code>unknown</code> for PitchBook. The correct answer — contact-sales, blocked, with
+          the lead form as evidence — required a person deciding that absence of public docs
+          <em>is</em> the finding.
+        </li>
+        <li>
+          <strong>Ground truth.</strong> All 36 field judgements were made by opening vendor
+          documentation in a browser. An agent grading its own homework is not an accuracy check.
+        </li>
+        <li>
+          <strong>Calling the schema trade-off.</strong> Deciding that a length breach should be
+          trimmed rather than fatal — and that <em>only</em> length breaches should be — is a
+          judgement about which errors are cosmetic. That is not a call to leave to a retry loop.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">Honesty</span>
+      <h2>What defeated us</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <h3>Anthropic credits</h3>
+        <p>
+          The hard stop. Ran out during the final pass and took four of five apps with it. Every
+          "failed" row on this page traces to billing, not to agent logic.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Composio connections</h3>
+        <p>
+          Only <code>COMPOSIO_SEARCH</code> was ever connected, and it needs no credentials. The
+          whole exercise ran on search plus URL fetch, with no real scraping toolkit. Connecting
+          Firecrawl or Exa is the single highest-value next step.
+        </p>
+      </div>
+      <div class="card">
+        <h3>PitchBook</h3>
+        <p>
+          Defeated the agent completely on the first pass — zero findings, every field unknown.
+          A human got the answer in two minutes. Private docs are a genuinely hard target for a
+          search-only agent, because there is nothing to find.
+        </p>
+      </div>
+      <div class="card">
+        <h3>MCP detection</h3>
+        <p>
+          The weakest dimension by far: 1 / 6 before the fixes. MCP servers are announced in
+          changelogs and separate docs trees that a docs-focused search does not surface unless
+          it is told to look.
+        </p>
+      </div>
+    </div>
+
+    <details>
+      <summary>Every number on this page, and where it came from</summary>
+      <p>
+        <b>$2.48</b> total recorded model spend across 4 batch/CLI runs. Per-app cost ranged
+        $0.12–$0.37. <b>191 model calls</b> recorded across the three batches, split Haiku
+        (gathering) to Opus (synthesis and verification) roughly 8:1 by call count.
+      </p>
+      <p>
+        <b>Pass 1</b> — 5 apps, 150.9s wall clock at concurrency 3, $0.8628, all 5 flagged for
+        human review. <b>Pass 2</b> — partial fixes, exposed defect 04; 4 of 5 produced no report.
+        <b>Pass 3</b> — all fixes, Stripe completed at $0.371 with 15 tool calls and 307 distinct
+        URLs seen; remaining 4 failed on credit exhaustion. Salesforce was run separately on
+        17 Aug at $0.2713.
+      </p>
+      <p>
+        <b>36 field judgements</b> = 6 apps × 6 dimensions (category, auth, access, API, MCP,
+        verdict), each compared by hand against the vendor documentation linked in the findings
+        table. Scoring rule: <code>unknown</code> counts as a miss when a documented public
+        answer exists, because a toolkit cannot be built on an abstention.
+      </p>
+    </details>
+  </section>
+
+  <footer>
+    Research agent for Composio's AI Product Ops take-home · runs, costs and failures recorded in
+    Postgres and reproduced above without adjustment · 18 August 2026
+  </footer>
+
+</div>

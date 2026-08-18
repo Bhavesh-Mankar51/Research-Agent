@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-research}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-research}
+      POSTGRES_DB: ${POSTGRES_DB:-research}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-research} -d ${POSTGRES_DB:-research}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  api:
+    build: ./backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      COMPOSIO_API_KEY: ${COMPOSIO_API_KEY}
+      COMPOSIO_USER_ID: ${COMPOSIO_USER_ID:-research-agent}
+      COMPOSIO_TOOLKITS: ${COMPOSIO_TOOLKITS:-COMPOSIO_SEARCH,EXA,FIRECRAWL,TAVILY}
+      ORCHESTRATOR_MODEL: ${ORCHESTRATOR_MODEL:-claude-opus-5}
+      WORKER_MODEL: ${WORKER_MODEL:-claude-haiku-4-5}
+      ORCHESTRATOR_EFFORT: ${ORCHESTRATOR_EFFORT:-medium}
+      MAX_TOOL_CALLS_PER_LANE: ${MAX_TOOL_CALLS_PER_LANE:-3}
+      MAX_SOURCE_CHARS: ${MAX_SOURCE_CHARS:-6000}
+      MAX_VERIFY_RETRIES: ${MAX_VERIFY_RETRIES:-1}
+      REPORT_CACHE_TTL_HOURS: ${REPORT_CACHE_TTL_HOURS:-168}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER:-research}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-research}
+      POSTGRES_DB: ${POSTGRES_DB:-research}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
+    ports:
+      - "${API_PORT:-8000}:8000"
+
+volumes:
+  pgdata:
